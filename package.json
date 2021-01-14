@@ -1,9 +1,9 @@
 {
-  "name": "bash-chart",
+  "name": "bash-hat",
   "version": "0.1.0",
   "description": "A fun filled way to learn bash and other command line stuff",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "rm -rf .parcel-cache && parcel index.html",
     "build": "parcel build index.html"
   },
   "license": "MIT",

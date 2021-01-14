@@ -1,0 +1,14 @@
+
+/* * { 
+    box-sizing: border-box;
+} */
+
+.container.panels {
+    display: flex;
+    border: 2px solid red;
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
