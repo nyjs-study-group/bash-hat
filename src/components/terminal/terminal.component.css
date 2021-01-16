@@ -21,9 +21,8 @@
     margin: 5px;
     width: calc( 100% - 10px );
     overflow: hidden;
-
     display: grid;
- 
+    grid-auto-rows: min-content;
 }
 
 .input.terminal {
@@ -37,4 +36,21 @@
     position: relative;
     width: 100% - 10px;
     opacity: 1;
+}
+
+.input.terminal {
+    border: 1px solid red;
+    display: flex;
+}
+
+.prompt.status {
+    border: 1px solid blue;
+}
+
+.prompt.input {
+    border: 1px solid yellow;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }

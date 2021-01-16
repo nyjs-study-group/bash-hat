@@ -8,10 +8,11 @@ import { Visualization } from './components/visualization';
 import './App.css';
 
 export default () => (
-  <>
+  <div className="container">
     <Header />
 
     <div className="container panels">
+
       <Panel name="left">
         <Terminal/>
       </Panel>
@@ -19,8 +20,9 @@ export default () => (
       <Panel name="right">
         <Visualization/>
       </Panel>
+
     </div>
-  </>
+  </div>
 );
 
 /**

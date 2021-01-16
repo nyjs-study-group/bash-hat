@@ -1,8 +1,10 @@
 import React from 'react';
+import { Terminal } from '../terminal';
 
 // Note importing .css code here will apply the styles 
 // into the .jsx code
 import './panel.component.css';
+
 
 export const Panel = props => (
     <div className="container panel">
