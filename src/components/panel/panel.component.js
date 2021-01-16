@@ -5,7 +5,7 @@ import React from 'react';
 import './panel.component.css';
 
 export const Panel = props => (
-    <div className="container panel" contentEditable>
+    <div className="container panel">
         { props.children }
     </div>
 );
