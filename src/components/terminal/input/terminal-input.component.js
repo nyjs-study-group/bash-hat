@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 
 
@@ -6,7 +7,7 @@ import '../terminal.component.css';
 
 export const TerminalInput = props => {
 
-    const onKeyDown = event$ => {
+    const onKeyUp = event$ => {
         const element = event$.target;
         const { clientWidth, scrollWidth } = element;
 
@@ -26,16 +27,20 @@ export const TerminalInput = props => {
 
             setInputText( element.innerText );
             console.log( 'overflow set the input text as ', inputText );
+        } else {
+
+            setInputText( element.innerText );
         }
     }
 
     const [ inputText, setInputText ] = useState('');
+
     
     useEffect( () => {
-        window.addEventListener('keyup', onKeyDown );
+        window.addEventListener('keyup', onKeyUp );
 
         return () =>
-          window.removeEventListener('keyup', onKeyDown );
+          window.removeEventListener('keyup', onKeyUp );
       }
     );
     
@@ -43,7 +48,7 @@ export const TerminalInput = props => {
         <div className="input terminal">
 
             <div className="prompt status">
-                ( base ) Robert-MBP:~ robertlamarca$ 
+                ( base ) Alfred-MBP:~ alfredenewman$ 
             </div>
 
             <div id="promptInput" 

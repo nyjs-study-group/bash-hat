@@ -5,7 +5,6 @@ import { Terminal } from '../terminal';
 // into the .jsx code
 import './panel.component.css';
 
-
 export const Panel = props => (
     <div className="container panel">
         { props.children }
