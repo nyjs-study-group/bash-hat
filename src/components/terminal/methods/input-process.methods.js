@@ -1,4 +1,11 @@
 
+/**
+ * @description
+ * This method needs to be completed in order 
+ * parse the text that comes from the input area
+ * into a command and its options. 
+  */
+
 export const parseEnteredInput = inputText => {
     // here you need separate the parts 
     // of the input text
