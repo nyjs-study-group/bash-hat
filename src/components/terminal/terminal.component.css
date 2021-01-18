@@ -52,5 +52,8 @@
     flex-grow: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-
+    background-color: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
 }

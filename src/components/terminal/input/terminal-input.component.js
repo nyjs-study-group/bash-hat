@@ -33,27 +33,69 @@ export const TerminalInput = props => {
         }
     }
 
+    const onKeyDown = event$ => {
+        // return
+        const element = event$.target;
+        
+        console.log("Event: ",event$)
+        console.log("Caret at: ",element.selectionStart)
+        console.log("offsetHeight: ",element.offsetHeight)
+        console.log("rows: ",element.rows)
+        console.log("scrollHeight: ",element.scrollHeight)
+
+
+        if (element.selectionStart <= promptText.length ){
+            if (event$.keyCode === 8 || event$.keyCode === 46){
+                event$.preventDefault()
+                console.log("ACTION FORBIDDEN: Trying to modify prompt")
+            }
+            positionCursor(element)
+            return
+            }
+        if (event$.keyCode === 13);
+            // TODO process command
+
+    }
+
+    onFocus = e => positionCursor(e.target)
+
+    const positionCursor = element => element.selectionStart = promptText.length
+
     const [ inputText, setInputText ] = useState('');
+    const [ promptText, setPromptText ] = useState('( base ) Alfred-MBP:~ alfredenewman$ ');
 
     
     useEffect( () => {
-        window.addEventListener('keyup', onKeyUp );
+        const element = document.getElementById("promptInput")
+        
+        element.value = promptText
 
-        return () =>
-          window.removeEventListener('keyup', onKeyUp );
+        positionCursor(element)
+
+        window.addEventListener('keyup', onKeyUp );
+        document.getElementById('promptInput').addEventListener('keydown', onKeyDown );
+        // document.getElementById('promptInput').addEventListener('onchange', onChange );
+
+        return () => {
+            window.removeEventListener('keyup', onKeyUp );
+            document.getElementById('promptInput').removeEventListener('keydown', onKeyDown );
+            // document.getElementById('promptInput').removeEventListener('onchange', onChange );
+        }
       }
     );
+
+    // window.document.onloadstart.getElementById("promptInput").value = promptText
     
     return (
         <div className="input terminal">
 
-            <div className="prompt status">
-                ( base ) Alfred-MBP:~ alfredenewman$ 
-            </div>
+            {/* <div className="prompt status">
+                { promptText }
+            </div> */}
 
-            <div id="promptInput" 
-                className="prompt input" contentEditable>
-            </div>
+            <textarea id="promptInput" 
+                className="prompt input" />
+            
         </div>
     );
 }
