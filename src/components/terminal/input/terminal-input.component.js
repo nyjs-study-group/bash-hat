@@ -15,6 +15,8 @@ export const TerminalInput = props => {
             return;
         }
 
+        element.style.height = element.scrollHeight + "px"
+
         // Enter key is hit
         if ( event$.keyCode === 13 ) { 
             
