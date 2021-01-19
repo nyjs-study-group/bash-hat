@@ -52,5 +52,13 @@
     flex-grow: 1;
     overflow: hidden;
     text-overflow: ellipsis;
+}
 
+.prompt.input.inner {
+    border: 1px solid red;
+    display: block;
+    height: 100%;
+    width: 50%;
+    max-width: 50%;
+    overflow: hidden;
 }
