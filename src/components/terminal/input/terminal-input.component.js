@@ -53,7 +53,8 @@ export const TerminalInput = props => {
         // keyCode 46: Delete
         if (element.selectionStart <= promptText.length ){
             if (event$.keyCode === 8 || event$.keyCode === 46){
-                event$.preventDefault()
+                if (element.selectionStart === element.selectionEnd)
+                    event$.preventDefault()
                 console.log("ACTION FORBIDDEN: Trying to modify prompt")
             }
             positionCursor(element)
