@@ -45,15 +45,16 @@ export const TerminalInput = props => {
         console.log("rows: ",element.rows)
         console.log("scrollHeight: ",element.scrollHeight)
 
-
+        // Preventing deletion of the prompt by backspace or delete keys
+        // keyCode 8: Backspace
+        // keyCode 46: Delete
         if (element.selectionStart <= promptText.length ){
             if (event$.keyCode === 8 || event$.keyCode === 46){
-                event$.preventDefault()
                 console.log("ACTION FORBIDDEN: Trying to modify prompt")
             }
             positionCursor(element)
             return
-            }
+        }
         if (event$.keyCode === 13);
             // TODO process command
 
