@@ -17,6 +17,9 @@ export const TerminalInput = props => {
 
         element.style.height = element.scrollHeight + "px"
 
+        if (element.selectionStart !== element.selectionEnd)
+                    element.selectionStart = promptText.length
+
         // Enter key is hit
         if ( event$.keyCode === 13 ) { 
             
@@ -50,6 +53,7 @@ export const TerminalInput = props => {
         // keyCode 46: Delete
         if (element.selectionStart <= promptText.length ){
             if (event$.keyCode === 8 || event$.keyCode === 46){
+                event$.preventDefault()
                 console.log("ACTION FORBIDDEN: Trying to modify prompt")
             }
             positionCursor(element)
