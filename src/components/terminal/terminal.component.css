@@ -56,4 +56,6 @@
     color: inherit;
     font-family: inherit;
     font-size: inherit;
+    word-break: break-word;
+    word-break: break-all;
 }
