@@ -52,5 +52,11 @@
     flex-grow: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-
+    background-color: transparent;
+    color: inherit;
+    height: 1.5rem;
+    font-family: inherit;
+    font-size: inherit;
+    word-break: break-word;
+    word-break: break-all;
 }
