@@ -65,6 +65,8 @@ export const TerminalInput = props => {
 
     }
 
+    onClick = e => { if (e.target.selectionStart <= promptText.length) positionCursor(e.target) }
+
     onFocus = e => positionCursor(e.target)
 
     const positionCursor = element => element.selectionStart = promptText.length
@@ -82,12 +84,12 @@ export const TerminalInput = props => {
 
         window.addEventListener('keyup', onKeyUp );
         document.getElementById('promptInput').addEventListener('keydown', onKeyDown );
-        // document.getElementById('promptInput').addEventListener('onchange', onChange );
+        document.getElementById('promptInput').addEventListener('click', onClick );
 
         return () => {
             window.removeEventListener('keyup', onKeyUp );
             document.getElementById('promptInput').removeEventListener('keydown', onKeyDown );
-            // document.getElementById('promptInput').removeEventListener('onchange', onChange );
+            document.getElementById('promptInput').removeEventListener('click', onClick );
         }
       }
     );
