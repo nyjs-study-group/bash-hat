@@ -39,14 +39,7 @@ export const TerminalInput = props => {
     }
 
     const onKeyDown = event$ => {
-        // return
         const element = event$.target;
-        
-        console.log("Event: ",event$)
-        console.log("Caret at: ",element.selectionStart)
-        console.log("offsetHeight: ",element.offsetHeight)
-        console.log("rows: ",element.rows)
-        console.log("scrollHeight: ",element.scrollHeight)
 
         // Preventing deletion of the prompt by backspace or delete keys
         // keyCode 8: Backspace
@@ -94,14 +87,9 @@ export const TerminalInput = props => {
       }
     );
 
-    // window.document.onloadstart.getElementById("promptInput").value = promptText
     
     return (
         <div className="input terminal">
-
-            {/* <div className="prompt status">
-                { promptText }
-            </div> */}
 
             <textarea id="promptInput" 
                 className="prompt input" />
