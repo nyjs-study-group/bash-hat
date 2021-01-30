@@ -1,99 +1,67 @@
 
 import React, { useEffect, useState } from 'react';
 
-
+import { onInputKeyDown } from './on-input-key-down';
+import { onInputKeyUp } from './on-input-key-up';
 
 import '../terminal.component.css';
 
 export const TerminalInput = props => {
+  
+  const [inputText, setInputText] = useState('');
+  console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>', inputText )
+  const [promptText, setPromptText] = useState('( base ) Alfred-MBP:~ alfredenewman$ ');
 
-    const onKeyUp = event$ => {
-        const element = event$.target;
-        const { clientWidth, scrollWidth } = element;
+  onClick = e => { 
+    if (e.target.selectionStart <= promptText.length) positionCursor(e.target) 
+  }
 
-        if ( element.id !== 'promptInput') { 
-            return;
-        }
+  const positionCursor = 
+    element => element.selectionStart = promptText.length;
 
-        element.style.height = element.scrollHeight + "px"
+  onFocus = e => positionCursor(e.target)
 
-        if (element.selectionStart !== element.selectionEnd)
-                    element.selectionStart = promptText.length
+  
 
-        // Enter key is hit
-        if ( event$.keyCode === 13 ) { 
-            
-            setInputText( element.innerText );
-            console.log( ' enter set the input text as ', inputText );
+  const effectsParams = {
+    inputText,
+    setInputText,
+    promptText,
+    setPromptText,
+    positionCursor,
+  }
 
+  useEffect(() => {
+    const inputElement = document.getElementById("promptInput");
+    inputElement.value = promptText;
 
-        } else if ( 0 > element.clientWidth - element.scrollWidth ) { 
-            // above logic detects text overflow
+    positionCursor(inputElement);
 
-            setInputText( element.innerText );
-            console.log( 'overflow set the input text as ', inputText );
-        } else {
+    const onInputKeyUpMethod =
+      event$ => onInputKeyUp( event$, effectsParams );
 
-            setInputText( element.innerText );
-        }
+      const onInputKeyDownMethod =
+      event$ => onInputKeyDown( event$, effectsParams );
+
+    inputElement.addEventListener( 'keyup', onInputKeyUpMethod );
+    inputElement.addEventListener('keydown', onInputKeyDownMethod);
+
+    // inputElement.addEventListener('click', onClick );
+
+    return () => {
+      inputElement.removeEventListener('keyup', onInputKeyUpMethod );
+      inputElement.removeEventListener('keydown', onInputKeyDownMethod );
+      // inputElement.removeEventListener('click', onClick);
     }
+  });
 
-    const onKeyDown = event$ => {
-        const element = event$.target;
 
-        // Preventing deletion of the prompt by backspace or delete keys
-        // keyCode 8: Backspace
-        // keyCode 46: Delete
-        if (element.selectionStart <= promptText.length ){
-            if (event$.keyCode === 8 || event$.keyCode === 46){
-                if (element.selectionStart === element.selectionEnd)
-                    event$.preventDefault()
-                console.log("ACTION FORBIDDEN: Trying to modify prompt")
-            }
-            positionCursor(element)
-            return
-        }
-        if (event$.keyCode === 13);
-            // TODO process command
+  return (
+    <div className="input terminal">
 
-    }
+      <textarea id="promptInput"
+        className="prompt input" />
 
-    onClick = e => { if (e.target.selectionStart <= promptText.length) positionCursor(e.target) }
-
-    onFocus = e => positionCursor(e.target)
-
-    const positionCursor = element => element.selectionStart = promptText.length
-
-    const [ inputText, setInputText ] = useState('');
-    const [ promptText, setPromptText ] = useState('( base ) Alfred-MBP:~ alfredenewman$ ');
-
-    
-    useEffect( () => {
-        const element = document.getElementById("promptInput")
-        
-        element.value = promptText
-
-        positionCursor(element)
-
-        window.addEventListener('keyup', onKeyUp );
-        document.getElementById('promptInput').addEventListener('keydown', onKeyDown );
-        document.getElementById('promptInput').addEventListener('click', onClick );
-
-        return () => {
-            window.removeEventListener('keyup', onKeyUp );
-            document.getElementById('promptInput').removeEventListener('keydown', onKeyDown );
-            document.getElementById('promptInput').removeEventListener('click', onClick );
-        }
-      }
-    );
-
-    
-    return (
-        <div className="input terminal">
-
-            <textarea id="promptInput" 
-                className="prompt input" />
-            
-        </div>
-    );
+    </div>
+  );
 }
