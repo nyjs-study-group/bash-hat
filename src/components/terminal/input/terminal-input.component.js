@@ -1,59 +1,65 @@
 
 import React, { useEffect, useState } from 'react';
 
-
+import { onInputKeyDown } from './on-input-key-down';
+import { onInputKeyUp } from './on-input-key-up';
 
 import '../terminal.component.css';
 
 export const TerminalInput = props => {
+  
+  const [inputText, setInputText] = useState('');
+  const [promptText, setPromptText] = useState('( base ) Alfred-MBP:~ alfredenewman$ ');
 
-    const onKeyUp = event$ => {
-        const element = event$.target;
-        const { clientWidth, scrollWidth } = element;
+  onClick = e => { 
+    if (e.target.selectionStart <= promptText.length) positionCursor(e.target) 
+  }
 
-        if ( element.id !== 'promptInput') { 
-            return;
-        }
+  const positionCursor = 
+    element => element.selectionStart = promptText.length;
 
-        // Enter key is hit
-        if ( event$.keyCode === 13 ) { 
-            
-            setInputText( element.innerText );
-            console.log( ' enter set the input text as ', inputText );
+  onFocus = e => positionCursor(e.target)
 
+  const effectsParams = {
+    inputText,
+    setInputText,
+    promptText,
+    setPromptText,
+    positionCursor,
+  }
 
-        } else if ( 0 > element.clientWidth - element.scrollWidth ) { 
-            // above logic detects text overflow
+  // TODO: see if we can make this more efficient by either 
+  // scoping some variables through the second argument of use 
+  // effect OR by some other means such as scoping these effects to a different
+  // element or context ( this is a future item of work )
+  useEffect(() => {
+    const inputElement = document.getElementById("promptInput");
+    inputElement.value = promptText;
 
-            setInputText( element.innerText );
-            console.log( 'overflow set the input text as ', inputText );
-        } else {
+    positionCursor(inputElement);
 
-            setInputText( element.innerText );
-        }
+    const onInputKeyUpMethod =
+      event$ => onInputKeyUp( event$, effectsParams );
+
+      const onInputKeyDownMethod =
+      event$ => onInputKeyDown( event$, effectsParams );
+
+    inputElement.addEventListener( 'keyup', onInputKeyUpMethod );
+    inputElement.addEventListener('keydown', onInputKeyDownMethod);
+
+    return () => {
+      inputElement.removeEventListener('keyup', onInputKeyUpMethod );
+      inputElement.removeEventListener('keydown', onInputKeyDownMethod );
     }
+  }, []);
 
-    const [ inputText, setInputText ] = useState('');
 
-    
-    useEffect( () => {
-        window.addEventListener('keyup', onKeyUp );
+  return (
+    <div className="input terminal">
 
-        return () =>
-          window.removeEventListener('keyup', onKeyUp );
-      }
-    );
-    
-    return (
-        <div className="input terminal">
+      <textarea id="promptInput"
+        className="prompt input" />
 
-            <div className="prompt status">
-                ( base ) Alfred-MBP:~ alfredenewman$ 
-            </div>
-
-            <div id="promptInput" 
-                className="prompt input" contentEditable>
-            </div>
-        </div>
-    );
+    </div>
+  );
 }
