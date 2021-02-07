@@ -9,7 +9,6 @@ import '../terminal.component.css';
 export const TerminalInput = props => {
   
   const [inputText, setInputText] = useState('');
-  console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>', inputText )
   const [promptText, setPromptText] = useState('( base ) Alfred-MBP:~ alfredenewman$ ');
 
   onClick = e => { 
@@ -21,8 +20,6 @@ export const TerminalInput = props => {
 
   onFocus = e => positionCursor(e.target)
 
-  
-
   const effectsParams = {
     inputText,
     setInputText,
@@ -31,6 +28,10 @@ export const TerminalInput = props => {
     positionCursor,
   }
 
+  // TODO: see if we can make this more efficient by either 
+  // scoping some variables through the second argument of use 
+  // effect OR by some other means such as scoping these effects to a different
+  // element or context ( this is a future item of work )
   useEffect(() => {
     const inputElement = document.getElementById("promptInput");
     inputElement.value = promptText;
@@ -46,14 +47,11 @@ export const TerminalInput = props => {
     inputElement.addEventListener( 'keyup', onInputKeyUpMethod );
     inputElement.addEventListener('keydown', onInputKeyDownMethod);
 
-    // inputElement.addEventListener('click', onClick );
-
     return () => {
       inputElement.removeEventListener('keyup', onInputKeyUpMethod );
       inputElement.removeEventListener('keydown', onInputKeyDownMethod );
-      // inputElement.removeEventListener('click', onClick);
     }
-  });
+  }, []);
 
 
   return (

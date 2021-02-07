@@ -6,7 +6,7 @@ import { TerminalOutput } from './output';
 import './terminal.component.css';
 
 export const Terminal = props => (
-    <div id="terminal" className="container terminal">
+    <div id="terminal" spellCheck={false} className="container terminal">
         {/* <div className="header terminal">
             Bash Hat Virtual Terminal
         </div> */}

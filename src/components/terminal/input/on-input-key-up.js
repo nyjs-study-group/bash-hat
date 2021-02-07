@@ -7,23 +7,14 @@ export const onInputKeyUp =
     setPromptText,
    } ) => {
 
-  if ( event$.keyCode === 13 ) { 
-    event$.preventDefault();
-    
-    return; 
-  } 
-
   const element = event$.target;
 
   if ( element.id !== 'promptInput') { 
     return;
   }
-
-  
   
   if ( 0 > element.clientWidth - element.scrollWidth ) { 
     // above logic detects text overflow
-
     setInputText( element.innerText );
     console.log( 'overflow set the input text as ', inputText );
     return;

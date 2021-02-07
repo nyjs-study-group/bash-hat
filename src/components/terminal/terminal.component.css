@@ -34,26 +34,28 @@
 }
 
 .input.terminal {
-    border: 1px solid red;
     display: flex;
     height: 1.3rem;
 }
 
 .prompt.status {
-    border: 1px solid blue;
+    
 }
 
 .prompt.input {
-    border: 1px solid yellow;
     flex-grow: 1;
     overflow: hidden;
     /* text-overflow: ellipsis; */
     /* overflow: */
+    border: none;
+    text-decoration: none;
+    outline: none;
     background-color: transparent;
     color: inherit;
     height: 1.5rem;
     font-family: inherit;
     font-size: inherit;
+    resize: none;
     word-break: break-word;
     word-break: break-all;
 }
