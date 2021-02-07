@@ -16,7 +16,6 @@ export const onInputKeyUp =
   if ( 0 > element.clientWidth - element.scrollWidth ) { 
     // above logic detects text overflow
     setInputText( element.innerText );
-    console.log( 'overflow set the input text as ', inputText );
     return;
   }
 
